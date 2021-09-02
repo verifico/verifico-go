@@ -1,5 +1,7 @@
 package evento
 
+import "strings"
+
 // VariableAdquisicion representa una adquisición de un producto o servicio.
 type VariableAdquisicion struct {
 	Pago                  *VariablePago                  `json:"pago,omitempty"`
@@ -70,6 +72,12 @@ func NuevaVariablePago(precio *VariablePrecio, tarjeta *VariableTarjetaDePago) *
 
 // NuevaVariableTarjetaDePago retorna una VariableTarjetaDePago inicializada con la fecha de expiración y los últimos cuatro dígitos proporcionados.
 func NuevaVariableTarjetaDePago(fechaDeExpiracion string, ultimosCuatroDigitos string) *VariableTarjetaDePago {
+	ultimosCuatroDigitos = strings.TrimSpace(ultimosCuatroDigitos)
+	var l = len(ultimosCuatroDigitos)
+	if l > 4 {
+		ultimosCuatroDigitos = ultimosCuatroDigitos[l-4:]
+	}
+
 	return &VariableTarjetaDePago{
 		FechaDeExpiracion:    fechaDeExpiracion,
 		UltimosCuatroDigitos: ultimosCuatroDigitos,
